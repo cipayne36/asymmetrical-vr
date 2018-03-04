@@ -1,0 +1,12 @@
+{
+  "name": "asymmetrical-vr",
+  "version": "1.0.0",
+  "description": "My first multi-user virtual reality",
+  "scripts": {
+    "start": "node ./server/easyrtc-server.js"
+  },
+  "author": "William Martin",
+  "dependencies": {
+    "networked-aframe": "^0.5.1"
+  }
+}
