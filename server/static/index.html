@@ -11,6 +11,7 @@
     <script src="https://haydenlee.io/networked-aframe/a-saturday-night/js/show-child.component.js"></script>
     <script src="/resources/randomize-avatar.component.js"></script>
     <script src="/resources/show-avatar.component.js"></script>
+    <script src="/resources/select-avatar.component.js"></script>
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
     <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
   </head>
@@ -61,7 +62,7 @@
 
 <!-- /////////////////////////////////////////////////////////// -->
 
-      <a-entity id="player" look-controls camera="userHeight:.01" networked="template:#mouse-template; showLocalTemplate:false" spawn-in-circle="radius:3" wasd-controls>
+      <a-entity id="player" look-controls camera="userHeight:.01" networked="template:#mouse-template; showLocalTemplate:false" select-avatar spawn-in-circle="radius:3" wasd-controls>
         <a-entity ></a-entity>
       </a-entity>
 
