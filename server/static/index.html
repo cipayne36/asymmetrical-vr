@@ -14,6 +14,37 @@
     <script src="/resources/select-avatar.component.js"></script>
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
     <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
+
+    <!-- Font src -->
+    <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
+
+    <!--Selectable Component Script -->
+    <script>
+      AFRAME.registerComponent('selectable', {
+      schema: {
+        id: {type: 'string', default: "Unknown Object"}
+
+      },
+      init: function () {
+        var element = this.el;
+        var ogColor = element.getAttribute('materials','color');
+        console.log(ogColor);
+        var elementID = this.data.id;
+
+        //select an object
+        element.addEventListener("mouseenter", function () {
+          element.setAttribute('color', 'green');
+          console.log(ogColor);
+          console.log("You're looking at: " + elementID);
+        });
+        //deselect an object
+        element.addEventListener("mouseleave", function () {
+          element.setAttribute('color', ogColor);
+          console.log(ogColor);
+    });
+  }
+});
+    </script>
   </head>
 
   <body>
@@ -58,17 +89,41 @@
           <a-sphere></a-sphere>
         </script>
 
+        <!-- Fonts -->
+        <a-asset-item id="dawningFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2FdawningOfANewDayRegular.typeface.json?1490305922844"></a-asset-item>
+        <a-asset-item id="exoFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2Black.typeface.json?1490305922150"></a-asset-item>
+        <a-asset-item id="exoItalicFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"></a-asset-item>
+
       </a-assets>
 
 <!-- /////////////////////////////////////////////////////////// -->
 
+
       <a-entity id="player" look-controls camera="userHeight:.01" networked="template:#mouse-template; showLocalTemplate:false" select-avatar spawn-in-circle="radius:3" wasd-controls>
+
+      <!-- MEN Text -->
+      <a-entity selectable= "id: exoFont" position="0 50 -0.5" scale="0.6 1.2 1" text-geometry="value: MEN; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;" material="color: red; metalness:0.9; roughness: 0.05;" rotation= '0 360 0'></a-entity>
+
+      <!-- MICE Text -->
+      <a-entity selectable= "id: exoFont" position="-10 50 -0.5" scale="0.6 1.2 1" text-geometry="value: MICE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05;" rotation= '0 360 0'></a-entity>
+
+      <!--mosue 
+      <a-entity id="player" look-controls camera="userHeight:.01" networked="template:#mouse-template; showLocalTemplate:false" spawn-in-circle="radius:3" wasd-controls
+      position= '-30 0.5 -5'>
+        <a-entity ></a-entity>
+      </a-entity> -->
+
+      <!--god -->
+      <a-entity id="player" look-controls camera="userHeight: 50" networked="template:#god-template; showLocalTemplate:false" wasd-controls
+      position='-5 0.5 15'>
+
+
         <a-entity ></a-entity>
       </a-entity>
 
       <a-entity id="ground" position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4;"></a-entity>
 
       <a-sky color="skyblue"></a-sky>
 
@@ -76,6 +131,8 @@
           maze='size: 10 10; cap: #end-cap; wall: #wall-one; open: W 5 E 5;' 
           position='-30 0.5 -5'>
           </a-entity>
+
+
 
     </a-scene>
 
