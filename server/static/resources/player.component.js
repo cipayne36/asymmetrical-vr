@@ -5,6 +5,7 @@ AFRAME.registerComponent('player', {
 
   init: function () {
     var element = this.el;
+    var camera = document.getElementById("playerHead");
     // var ground = this.el.sceneEl.querySelector("#ground");
     var playerType = this.data.playerType;
     if (playerType != "MOUSE" && playerType != "GOD") {
@@ -19,7 +20,7 @@ AFRAME.registerComponent('player', {
       //networked="template:#mouse-template; showLocalTemplate:false"
       console.log("Player set to: God");
     } else {
-      element.setAttribute('camera', "userHeight:.1");
+      element.setAttribute('camera', "userHeight:0.6");
       element.setAttribute('networked', "template:#mouse-template; showLocalTemplate:false")
       console.log("Player set to: Mouse");
     }

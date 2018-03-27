@@ -20,30 +20,40 @@
 
     <!--Selectable Component Script -->
     <script>
-      AFRAME.registerComponent('selectable', {
-      schema: {
-        id: {type: 'string', default: "Unknown Object"}
+      NAF.schemas.add({
+        template: '#mouse-template',
+        components: [
+          'position',
+          {
+            component: 'rotation',
+            property: 'y'
+          },
+        ]
+      });
+//       AFRAME.registerComponent('selectable', {
+//       schema: {
+//         id: {type: 'string', default: "Unknown Object"}
 
-      },
-      init: function () {
-        var element = this.el;
-        var ogColor = element.getAttribute('materials','color');
-        console.log(ogColor);
-        var elementID = this.data.id;
+//       },
+//       init: function () {
+//         var element = this.el;
+//         var ogColor = element.getAttribute('materials','color');
+//         console.log(ogColor);
+//         var elementID = this.data.id;
 
-        //select an object
-        element.addEventListener("mouseenter", function () {
-          element.setAttribute('color', 'green');
-          console.log(ogColor);
-          console.log("You're looking at: " + elementID);
-        });
-        //deselect an object
-        element.addEventListener("mouseleave", function () {
-          element.setAttribute('color', ogColor);
-          console.log(ogColor);
-    });
-  }
-});
+//         //select an object
+//         element.addEventListener("mouseenter", function () {
+//           element.setAttribute('color', 'green');
+//           console.log(ogColor);
+//           console.log("You're looking at: " + elementID);
+//         });
+//         //deselect an object
+//         element.addEventListener("mouseleave", function () {
+//           element.setAttribute('color', ogColor);
+//           console.log(ogColor);
+//     });
+//   }
+// });
     </script>
   </head>
 
@@ -77,7 +87,7 @@
 
         <!-- Avatar -->
           <script id="mouse-template" type="text/html">
-            <a-entity class="avatar" rotation=".5 .5 .5" scale=".3 .3 .3" gltf-model="#mouse"></a-entity> <!-- userHeight:.01 -->
+            <a-entity class="avatar" position = "0 -0.6 0" rotation="0 180 0" scale=".3 .3 .3" gltf-model="#mouse"></a-entity> <!-- userHeight:.01 -->
           </script>
 
           <script id="god-template" type="text/html">
@@ -99,9 +109,7 @@
 
 <!-- /////////////////////////////////////////////////////////// -->
 
-        
-      <a-entity id="player" player="playerType: MOUSE" camera="userHeight:.5" spawn-in-circle="radius:3" wasd-controls>
-        <a-camera look-controls camera="userHeight:.5"></a-camera>
+      <a-entity id="player" player="playerType: MOUSE" camera="userHeight: 0.5" look-controls wasd-controls>
       </a-entity>
 
       <!-- MEN Text -->
@@ -132,6 +140,8 @@
 
     <script>
       // On mobile remove elements that are resource heavy
+      document.getElementById("player").object3D.rotation.x = 10;
+      console.log(document.getElementById("player").object3D.rotation.x);
       var isMobile = AFRAME.utils.device.isMobile();
 
       if (isMobile) {
