@@ -11,7 +11,7 @@
     <script src="https://haydenlee.io/networked-aframe/a-saturday-night/js/show-child.component.js"></script>
     <script src="/resources/randomize-avatar.component.js"></script>
     <script src="/resources/show-avatar.component.js"></script>
-    <script src="/resources/select-avatar.component.js"></script>
+    <script src="/resources/player.component.js"></script>
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
     <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
 
@@ -55,9 +55,7 @@
       debug: true;
       adapter: wseasyrtc;
     ">
-    <!-- <a-camera>
-      <a-cursor raycaster="showLine: true"></a-cursor>
-    </a-camera>
+
  --><!-- /////////////////////////////////////////////////////////// -->
       <a-assets>
         <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous"/>
@@ -101,8 +99,7 @@
 
 <!-- /////////////////////////////////////////////////////////// -->
 
-
-      <a-entity id="player" look-controls camera="userHeight:.5" networked="template:#mouse-template; showLocalTemplate:false" spawn-in-circle="radius:3" wasd-controls>
+      <a-entity id="player" player="playerType: MOUSE" look-controls camera="userHeight:.5" spawn-in-circle="radius:3" wasd-controls>
       </a-entity>
 
       <!-- MEN Text -->
@@ -110,20 +107,6 @@
 
       <!-- MICE Text -->
       <a-entity selectable= "id: exoFont" position="-10 50 -0.5" scale="0.6 1.2 1" text-geometry="value: MICE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05;" rotation= '0 360 0'></a-entity>
-
-      <!--mosue 
-      <a-entity id="player" look-controls camera="userHeight:.01" networked="template:#mouse-template; showLocalTemplate:false" spawn-in-circle="radius:3" wasd-controls
-      position= '-30 0.5 -5'>
-        <a-entity ></a-entity>
-      </a-entity> -->
-
-      <!--god -->
-      <!-- <a-entity id="player" look-controls camera="userHeight: 50" networked="template:#god-template; showLocalTemplate:false" wasd-controls
-      position='-5 0.5 15'></a-entity> -->
-
-      <!-- <a-entity id="ground" position="0 0 0"
-        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4;"></a-entity> -->
 
       <a-entity
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
