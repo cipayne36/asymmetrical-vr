@@ -4,7 +4,7 @@
     <title>Asymmetrical Aframe - WIP</title>
     <meta name="description" content="Asymmetrical Aframe - WIP">
 
-    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
 
     <script src="https://haydenlee.io/networked-aframe/a-saturday-night/js/spawn-in-circle.component.js"></script>
@@ -53,15 +53,17 @@
       room: dev;
       debug: true;
       adapter: wseasyrtc;
+	  physics = "debug: true; friction: 0.1; restitution: 0.5;
     ">
 <!-- /////////////////////////////////////////////////////////// -->
       <a-assets>
+		<img id="texture-wall" src="https://imgur.com/mYmmbrp">
         <!-- Mouse model -->
         <a-asset-item id="mouse" src="/resources/mouse/scene.gltf"></a-asset-item>
 
         <!-- Maze -->
-        <a-box static-body id="wall-one" 
-          color="#444444" 
+        <a-box id="wall-one" 
+		  static-body material="src: #texture-wall" 
           depth="1" width="4" height="10" shadow></a-box>
 
         <a-cylinder id="end-cap"
@@ -110,14 +112,17 @@
       </a-entity> -->
 
       <!--god -->
-      <a-entity id="player" look-controls camera="userHeight: 50" networked="template:#god-template; showLocalTemplate:false" wasd-controls
-      position='-5 0.5 15'>
+      <a-entity id="player" universal-controls camera="userHeight: 50" networked="template:#god-template; showLocalTemplate:false" wasd-controls
+      position='-5 0.5 15'
+	  kinematic-body
+	  >
 
         <a-entity ></a-entity>
       </a-entity>
 
       <a-entity id="ground" position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+		static-body
         material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4;"></a-entity>
 
       <a-sky color="skyblue"></a-sky>
@@ -126,7 +131,9 @@
           maze='size: 10 10; cap: #end-cap; wall: #wall-one; open: W 5 E 5;' 
           position='-30 0.5 -5'>
           </a-entity>
-
+	
+	  <a-entity id = "end-cap"
+			position = position='-30 0.5 -5'
 
 
     </a-scene>
