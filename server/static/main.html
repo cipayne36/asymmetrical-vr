@@ -6,12 +6,26 @@
 
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
-    <script type="text/javascript">window.addEventListener('vrdisplayactivate' function (evt) { vrDisplay.requestPresent([{ source: myCanvas }]).then(function () { ... });
-}</script>
+    <!-- <script type="text/javascript">
+      window.addEventListener('vrdisplayactivate' function (evt) {
+        vrDisplay.requestPresent([{ source: myCanvas }]).then(function () { ... })
+      });
+    </script> -->
     <script src="/resources/player.component.js"></script>
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
     <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
-
+    <script>
+      NAF.schemas.add({
+        template: '#mouse-template',
+        components: [
+          'position',
+          {
+            component: 'rotation',
+            property: 'y'
+          },
+        ]
+      });
+    </script>
   </head>
 
   <body>
@@ -23,7 +37,6 @@
       adapter: wseasyrtc;
     ">
 
- --><!-- /////////////////////////////////////////////////////////// -->
       <a-assets>
         <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous"/>
         <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"/>
@@ -64,10 +77,7 @@
 
       </a-assets>
 
-<!-- /////////////////////////////////////////////////////////// -->
-
-      <a-entity id="player" player="playerType: GOD" look-controls raycaster camera="userHeight:.5" wasd-controls>
-      </a-entity>
+      <a-entity id="player" player="playerType: GOD" look-controls raycaster camera="userHeight:.5" wasd-controls></a-entity>
 
       <!-- MEN Text -->
       <!-- <a-entity selectable= "id: exoFont" position="0 50 -0.5" scale="0.6 1.2 1" text-geometry="value: MEN; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;" material="color: red; metalness:0.9; roughness: 0.05;" rotation= '0 360 0'></a-entity> -->
@@ -92,8 +102,6 @@
       <a-entity light="color: white; type: ambient;"></a-entity>
 
     </a-scene>
-
-<!-- /////////////////////////////////////////////////////////// -->
 
     <script>
       // On mobile remove elements that are resource heavy
