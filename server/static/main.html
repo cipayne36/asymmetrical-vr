@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Asymmetrical Aframe - WIP</title>
+    <meta name="description" content="Asymmetrical Aframe - WIP">
+
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script type="text/javascript">window.addEventListener('vrdisplayactivate' function (evt) { vrDisplay.requestPresent([{ source: myCanvas }]).then(function () { ... });
+}</script>
+    <script src="/resources/player.component.js"></script>
+    <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
+    <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
+
+  </head>
+
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="/easyrtc/easyrtc.js"></script>
+    <a-scene networked-scene="
+      room: dev;
+      debug: true;
+      adapter: wseasyrtc;
+    ">
+
+ --><!-- /////////////////////////////////////////////////////////// -->
+      <a-assets>
+        <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous"/>
+        <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"/>
+        <img src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg" id="chrome" crossorigin="anonymous">
+
+        <!-- Mouse model -->
+          <a-asset-item id="mouse" src="/resources/mouse/scene.gltf"></a-asset-item>
+
+        <!-- Maze -->
+          <a-box static-body id="wall-one" 
+            color="#444444" 
+            depth="1" width="4" height="5" shadow></a-box>
+
+          <a-cylinder id="end-cap"
+            static-body color="silver" 
+            depth="1.5" width="1.5" height="5.1"
+            radius="0.6"></a-cylinder>
+
+        <!-- Avatar -->
+          <script id="mouse-template" type="text/html">
+            <a-entity class="avatar" rotation=".5 .5 .5" scale=".3 .3 .3" gltf-model="#mouse"></a-entity> <!-- userHeight:.01 -->
+          </script>
+
+          <script id="god-template" type="text/html">
+            <a-entity class="avatar"> <!-- userHeight:30 -->
+              <a-sphere></a-sphere>
+            </a-entity>
+          </script>
+
+          <script id="simple" type="text/html">
+            <a-sphere></a-sphere>
+          </script>
+
+        <!-- Fonts -->
+          <!-- <a-asset-item id="dawningFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2FdawningOfANewDayRegular.typeface.json?1490305922844"></a-asset-item>
+          <a-asset-item id="exoFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2Black.typeface.json?1490305922150"></a-asset-item>
+          <a-asset-item id="exoItalicFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"></a-asset-item> -->
+
+      </a-assets>
+
+<!-- /////////////////////////////////////////////////////////// -->
+
+      <a-entity id="player" player="playerType: GOD" look-controls raycaster camera="userHeight:.5" wasd-controls>
+      </a-entity>
+
+      <!-- MEN Text -->
+      <!-- <a-entity selectable= "id: exoFont" position="0 50 -0.5" scale="0.6 1.2 1" text-geometry="value: MEN; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;" material="color: red; metalness:0.9; roughness: 0.05;" rotation= '0 360 0'></a-entity> -->
+
+      <!-- MICE Text -->
+      <!-- <a-entity selectable= "id: exoFont" position="-10 50 -0.5" scale="0.6 1.2 1" text-geometry="value: MICE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05;" rotation= '0 360 0'></a-entity> -->
+
+      <!-- <a-entity
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity> -->
+
+      <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+
+      <a-entity id="default-maze" 
+          maze='size: 10 10; cap: #end-cap; wall: #wall-one; open: W 5 E 5;' 
+          position='-30 2.5 -5'>
+          </a-entity>
+
+      <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
+      <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
+      <a-entity light="color: white; intensity: 0.5" position="-5 5 15"></a-entity>
+      <a-entity light="color: white; type: ambient;"></a-entity>
+
+    </a-scene>
+
+<!-- /////////////////////////////////////////////////////////// -->
+
+    <script>
+      // On mobile remove elements that are resource heavy
+      var isMobile = AFRAME.utils.device.isMobile();
+
+      if (isMobile) {
+        var particles = document.getElementById('particles');
+        particles.parentNode.removeChild(particles);
+      }
+    </script>
+  </body>
+</html>
