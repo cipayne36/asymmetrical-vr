@@ -64,9 +64,10 @@
           </template>
       </a-assets>
 
-      <a-entity id="player" player="playerType: GOD" look-controls raycaster camera="userHeight:.5" wasd-controls></a-entity>
+      <a-entity id="player" player="playerType: GOD" look-controls raycaster camera="userHeight:.5" wasd-controls>
+        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E"></a-entity>
+      </a-entity>
 
-      <a-entity daydream-controls="hand: right"></a-entity>
 
       
       <div id="maze-container">
