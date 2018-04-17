@@ -66,7 +66,13 @@
           </template>
       </a-assets>
 
-      <a-entity id="player" kinematic-body player="playerType: GOD" look-controls raycaster camera="userHeight:.5" universal-controls></a-entity>
+
+      <a-entity id="player" kinematic-body player="playerType: GOD" look-controls raycaster camera="userHeight:.5" universal-controls>
+        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E"></a-entity>
+      </a-entity>
+
+
+
       
       <div id="maze-container">
         <!-- <a-entity id="maze" networked="template:#maze-template; attachTemplateToLocal:true"></a-entity> -->
