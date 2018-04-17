@@ -6,6 +6,7 @@
     <meta name="description" content="Asymmetrical Aframe - WIP">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script src="/resources/daydream-walk.component.js"></script>
 
     <script type="text/javascript">
       function storeChoice(playerType) {
@@ -31,13 +32,13 @@
       <a-asset-item id="exoItalicFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"></a-asset-item> -->
     </a-assets>
 
-    <a-camera position="0 0 10">
-      <a-cursor  raycaster color="white"></a-cursor>
+    <a-camera id="player" daydream-walk position="0 0 10">
+    <!-- <a-cursor  raycaster color="white"></a-cursor> -->
     </a-camera>
 
     <a-entity class="avatar" position="0 0 -30" scale="4 4 4" gltf-model="#mouse"></a-entity>
 
-    <a-entity daydream-controls="hand: right" raycaster="showLine: true" line="color: #118A7E"></a-entity>
+    <a-entity laser-controls="hand: right" raycaster="showLine: true" line="color: #118A7E" daydream-walk></a-entity>
 
     <a-link onclick="storeChoice('MOUSE');" href="main.html" title="Mice" position="-13 3 -5.0" image="#mousePreview"  scale="2 3 0" backgroundColor="purple" visible="" geometry="" material="" link=""></a-link>
 
