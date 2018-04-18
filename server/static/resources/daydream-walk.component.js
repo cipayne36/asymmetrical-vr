@@ -28,6 +28,11 @@ AFRAME.registerComponent('daydream-walk', {
 			player.object3D.position.add(a);
 			console.log("R: " + player.object3D.rotation.y + "      X: " + new_x + "     Z: " + new_z);
 		}
+
+		if (player.object3D.position.y < 0) {
+			player.object3D.position.y = 0.5;
+		}
+)
 	}
 
 

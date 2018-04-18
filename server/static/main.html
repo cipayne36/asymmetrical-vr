@@ -30,7 +30,7 @@
         <img src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg" id="chrome" crossorigin="anonymous">
 
         <!-- Mouse model -->
-          <a-asset-item id="mouse" kinematic-body src="/resources/mouse/scene.gltf"></a-asset-item>
+          <a-asset-item id="mouse" rotation= "0 180 0" src="/resources/mouse/scene.gltf"></a-asset-item>
 
 
 
@@ -46,7 +46,7 @@
 
         <!-- Avatar -->
           <template id="mouse-template">
-            <a-entity class="avatar" kinematic-body rotation=".5 .5 .5" scale=".3 .3 .3" gltf-model="#mouse"></a-entity> <!-- userHeight:.01 -->
+            <a-entity class="avatar" rotation=".5 180 .5" scale=".3 .3 .3" gltf-model="#mouse"></a-entity> <!-- userHeight:.01 -->
           </template>
 
           <template id="god-template">
@@ -68,7 +68,7 @@
           </template>
       </a-assets>
 
-      <a-entity id="player" kinematic-body player="playerType: GOD" look-controls raycaster camera="userHeight:.5" position="-30 70 0" universal-controls>
+      <a-entity id="player" player="playerType: GOD" raycaster camera="userHeight:.5" universal-controls kinematic-body>
         <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E" daydream-walk></a-entity>
       </a-entity>
       
@@ -79,11 +79,15 @@
       <a-entity id="data" user-count="0" networked="template:#data-template"></a-entity>
 
       <a-entity
-        geometry="primitive: plane; width: 10000; height: 10000;" static-body rotation="-90 0 0" position="0 -1 0"
-        material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+        geometry="primitive: plane; width: 300; height: 300;" static-body rotation="-90 -25.5 0" position="0 0 0"
+        material="src: #grid; repeat: 1000 1000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
 
       <a-entity
-        geometry="primitive: plane; width: 10000; height: 10000;" static-body rotation="-90 0 0" position="0 50 0" material= "opacity: 0.0; transparent: true;"></a-entity>
+        geometry="primitive: box; width: 300; height: 300; depth: 50" static-body rotation="-90 -25 0" position="0 -25 0" material= "opacity: 0.0; transparent: true;"></a-entity>
+
+
+      <a-entity
+        geometry="primitive: plane; width: 1000; height: 1000;" static-body rotation="-90 0 0" position="0 69 0" material= "opacity: 0.0; transparent: true;"></a-entity>
 
       <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
@@ -120,6 +124,7 @@
           'position',
           'rotation',
           'maze',
+          'networkId'
         ]
       });
 

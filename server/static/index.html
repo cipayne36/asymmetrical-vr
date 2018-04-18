@@ -32,14 +32,17 @@
       <a-asset-item id="exoItalicFont" src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"></a-asset-item> -->
     </a-assets>
 
-    <a-camera id="player" daydream-walk position="0 0 10">
-    <!-- <a-cursor  raycaster color="white"></a-cursor> -->
-    </a-camera>
+
+
+    <a-entity id="player" player="playerType: GOD" look-controls raycaster camera position="0 1 10">
+      <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E" daydream-walk></a-entity>
+      <a-cursor  raycaster color="white"></a-cursor>
+
+    </a-entity>
 
     <a-entity class="avatar" position="0 0 -30" scale="4 4 4" gltf-model="#mouse"></a-entity>
 
-    <a-entity position="10 0 10" scale="4 4 4" gltf-model="#cheese"></a-entity>
-    <a-entity laser-controls="hand: right" raycaster="showLine: true" line="color: #118A7E" daydream-walk></a-entity>
+    <a-entity position="10 2 10" scale="4 4 4" gltf-model="#cheese"></a-entity>
 
 
     <a-link onclick="storeChoice('MOUSE');" href="main.html" title="Mice" position="-13 3 -5.0" image="#mousePreview"  scale="2 3 0" backgroundColor="purple" visible="" geometry="" material="" link=""></a-link>
@@ -47,7 +50,7 @@
     <a-link onclick="storeChoice('GOD');" href="main.html" title="Observer" position="13 3 -5.0" image="#godPreview" scale="2 3 0" backgroundColor="purple" visible="" geometry="" material="" link=""></a-link>
 
     <a-entity
-        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        geometry="primitive: plane; width: 300; height: 300;" rotation="-90 0 0"
         material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
     <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
