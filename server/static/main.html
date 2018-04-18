@@ -10,6 +10,8 @@
     <script src="/resources/user-count.component.js"></script>
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
     <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
+    <script src="/resources/daydream-walk.component.js"></script>
+
 
   </head>
 
@@ -68,7 +70,7 @@
 
 
       <a-entity id="player" kinematic-body player="playerType: GOD" look-controls raycaster camera="userHeight:.5" position="-30 70 0" universal-controls>
-        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E"></a-entity>
+        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E" daydream-walk></a-entity>
       </a-entity>
       
       <div id="maze-container">
