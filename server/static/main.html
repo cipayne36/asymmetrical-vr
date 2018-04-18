@@ -68,12 +68,9 @@
           </template>
       </a-assets>
 
-      <a-entity id="player" player="playerType: GOD" raycaster camera="userHeight:.5" universal-controls>
-        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E" daydream walk></a-entity>
+      <a-entity id="player" kinematic-body player="playerType: GOD" look-controls raycaster camera="userHeight:.5" position="-30 70 0" universal-controls>
+        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E" daydream-walk></a-entity>
       </a-entity>
-
-
-
       
       <div id="maze-container">
         <!-- <a-entity id="maze" networked="template:#maze-template; attachTemplateToLocal:true"></a-entity> -->
@@ -84,6 +81,9 @@
       <a-entity
         geometry="primitive: plane; width: 10000; height: 10000;" static-body rotation="-90 0 0" position="0 -1 0"
         material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+
+      <a-entity
+        geometry="primitive: plane; width: 10000; height: 10000;" static-body rotation="-90 0 0" position="0 50 0" material= "opacity: 0.0; transparent: true;"></a-entity>
 
       <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
