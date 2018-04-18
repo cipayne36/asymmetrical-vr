@@ -13,8 +13,8 @@ AFRAME.registerComponent('daydream-walk', {
 	},
 
 	tick: function() {
+		var player = document.getElementById("player");
 		if (isPressed) {
-			var player = document.getElementById("player");
 			var new_x = 0;
 			var new_z = 0;
 			var x =	player.object3D.position.x;
@@ -32,7 +32,6 @@ AFRAME.registerComponent('daydream-walk', {
 		if (player.object3D.position.y < 0) {
 			player.object3D.position.y = 0.5;
 		}
-)
 	}
 
 
