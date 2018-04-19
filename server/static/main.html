@@ -8,6 +8,7 @@
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
     <script src="/resources/player.component.js"></script>
     <script src="/resources/user-count.component.js"></script>
+    <script src="/resources/spawn-in-circle.component.js"></script>
     <script src="https://cdn.rawgit.com/wizgrav/aframe-effects/5ff685cd/dist/aframe-effects.js"></script>
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
     <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
@@ -57,7 +58,7 @@
 
         <!-- Mouse model -->
           <a-asset-item id="mouse" src="/resources/mouse/scene.gltf"></a-asset-item>
-          <a-asset-item id="cheese" src="/resources/cheese.gltf"></a-asset-item>
+          <a-asset-item id="cheese" src="/resources/Cheese.gltf"></a-asset-item>
 
 
 
@@ -72,8 +73,38 @@
           </template>
 
           <template id="god-template">
-            <a-entity class="avatar"> <!-- userHeight:30 -->
-              <a-sphere></a-sphere>
+            <a-entity scale="20 20 20" class="avatar">
+              <a-sphere class="head"
+                color="#5985ff"
+                scale="0.45 0.5 0.4"
+                random-color
+              ></a-sphere>
+              <a-entity class="face"
+                position="0 0.05 0"
+              >
+                <a-sphere class="eye"
+                  color="#efefef"
+                  position="0.16 0.1 -0.35"
+                  scale="0.12 0.12 0.12"
+                >
+                  <a-sphere class="pupil"
+                    color="#000"
+                    position="0 0 -1"
+                    scale="0.2 0.2 0.2"
+                  ></a-sphere>
+                </a-sphere>
+                <a-sphere class="eye"
+                  color="#efefef"
+                  position="-0.16 0.1 -0.35"
+                  scale="0.12 0.12 0.12"
+                >
+                  <a-sphere class="pupil"
+                    color="#000"
+                    position="0 0 -1"
+                    scale="0.2 0.2 0.2"
+                  ></a-sphere>
+                </a-sphere>
+              </a-entity>
             </a-entity>
           </template>
 
@@ -104,7 +135,7 @@
       <a-entity id="data" user-count="0" networked="template:#data-template"></a-entity>
 
       <a-entity id="ground"
-        geometry="primitive: plane; width: 300; height: 300;" static-body rotation="-90 25  0" position="0 0 0"
+        geometry="primitive: plane; width: 300; height: 300;" static-body rotation="-90 25  0" position="0 -1 0"
         material="src: #grid; repeat: 1000 1000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
 
       <a-entity

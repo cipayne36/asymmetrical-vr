@@ -16,10 +16,12 @@ AFRAME.registerComponent('player', {
       element.setAttribute("wall-break");
       element.setAttribute("cheese-place");
       element.setAttribute('networked', "template:#god-template; attachTemplateToLocal:false", "daydream-walk");
+      element.setAttribute('spawn-in-circle', "radius:75")
       console.log("Player set to: God");
     } else {
       element.setAttribute('camera', "userHeight:0.6; fov: 100");
-      element.setAttribute("position", "-4 1 -3");
+      element.setAttribute("position", "10 1 -3");
+      element.setAttribute('spawn-in-circle', "radius:5")
       document.getElementById("cheese-spot").removeAttribute("geometry");
       document.getElementById("cheese-spot").setAttribute("position", "1000 1000 1000");
 
