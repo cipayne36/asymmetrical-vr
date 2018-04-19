@@ -16,20 +16,25 @@ AFRAME.registerComponent('wall-break', {
 			isDown = false;
 		});
 
+		document.addEventListener("trackpaddown", function() {
+			isDown = true;
+		});
+
+		document.addEventListener("trackpadup", function() {
+			isDown = false;
+		});
+
 		element.addEventListener("raycaster-intersection", function(e) {
 			if (isDown) {
 				var object = e.detail.els;
 				if (object != null) {
 					for (x = 0; x < object.length; x++) {
-						objNetworked = object[x].getAttribute("networked");
-						if (objNetworked!= null) {
-							temp = objNetworked.template;
-							if (temp == "wall-one-template" || temp == "end-cap-template") {
-								objNetworked.removeAttribute("static-body");
-								objNetworked.removeAttribute("geometry");
-								console.log("wall broken");
-								break;
-							}
+						oMixin = object[x].getAttribute("mixin");
+						if (oMixin!= null && timer > 100) {
+							timer = 0;
+							object[x].setAttribute("mixin", "destroyed");
+							object[x].removeAttribute("geometry");
+							object[x].removeAttribute("static-body");
 						}
 					}
 				}

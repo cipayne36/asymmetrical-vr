@@ -13,6 +13,7 @@ AFRAME.registerComponent('daydream-walk', {
 	},
 
 	tick: function() {
+		
 		var player = document.getElementById("player");
 		if (isPressed) {
 			var new_x = 0;
