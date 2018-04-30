@@ -1,0 +1,188 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Asymmetrical Aframe - WIP</title>
+    <meta name="description" content="Asymmetrical Aframe - WIP">
+
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script src="/resources/player.component.js"></script>
+    <script src="/resources/user-count.component.js"></script>
+    <script src="/resources/spawn-in-circle.component.js"></script>
+    <script src="https://cdn.rawgit.com/wizgrav/aframe-effects/5ff685cd/dist/aframe-effects.js"></script>
+    <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>
+    <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
+    <script src="/resources/daydream-walk.component.js"></script>
+    <script src="/resources/wall-break.component.js"></script>
+    <script src="/resources/cheese-place.component.js"></script>
+
+
+  </head>
+
+  <body>
+    <script>
+          //Handle control setup
+      AFRAME.registerComponent('mobile-control', {
+        init: function () {
+          var el = this.el;
+          var player = document.getElementById("player");
+
+          var cursor = document.createElement('a-cursor');
+          cursor.setAttribute('color', 'white');
+          cursor.setAttribute('fuse', 'false');
+
+          player.appendChild(cursor);
+          console.log("added cursor!!!!!");
+
+        }
+      });
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="/easyrtc/easyrtc.js"></script>
+    <a-scene networked-scene="
+      room: dev;
+      debug: true;
+      adapter: wseasyrtc;
+    ">
+
+      <a-assets>
+        <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous"/>
+        <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"/>
+        <img src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg" id="chrome" crossorigin="anonymous">
+        <a-mixin id= "wall-one" static-body geometry="primitive:box; height: 5; width: 5; depth: 1;" material="color: #444444;" shadow></a-mixin>
+        <a-mixin id= "end-cap" static-body geometry="primitive:cylinder; height: 5.3; radius: 0.45" color="silver" material=""></a-mixin>
+        <a-mixin id="destroyed"></a-mixin>
+
+
+        <!-- Mouse model -->
+          <a-asset-item id="mouse" src="/resources/mouse/scene.gltf"></a-asset-item>
+          <a-asset-item id="cheese" src="/resources/Cheese.gltf"></a-asset-item>
+
+
+
+
+        <!-- Maze -->
+
+        <!-- Avatar -->
+          <template id="mouse-template">
+            <a-entity rotation="90 180 0">
+            <a-entity class="avatar" scale=".3 .3 .3" rotation="0 180 0" gltf-model="#mouse" animation-mixer></a-entity></a-entity>
+            <!-- userHeight:.01 -->
+          </template>
+
+          <template id="god-template">
+            <a-entity scale="20 20 20" class="avatar">
+              <a-sphere class="head"
+                color="#5985ff"
+                scale="0.45 0.5 0.4"
+                random-color
+              ></a-sphere>
+              <a-entity class="face"
+                position="0 0.05 0"
+              >
+                <a-sphere class="eye"
+                  color="#efefef"
+                  position="0.16 0.1 -0.35"
+                  scale="0.12 0.12 0.12"
+                >
+                  <a-sphere class="pupil"
+                    color="#000"
+                    position="0 0 -1"
+                    scale="0.2 0.2 0.2"
+                  ></a-sphere>
+                </a-sphere>
+                <a-sphere class="eye"
+                  color="#efefef"
+                  position="-0.16 0.1 -0.35"
+                  scale="0.12 0.12 0.12"
+                >
+                  <a-sphere class="pupil"
+                    color="#000"
+                    position="0 0 -1"
+                    scale="0.2 0.2 0.2"
+                  ></a-sphere>
+                </a-sphere>
+              </a-entity>
+            </a-entity>
+          </template>
+
+          <template id="cheese-template">
+            <a-entity scale="0.003 0.003 0.003" gltf-model="#cheese"></a-entity>
+          </template>
+
+          <template id="simple">
+            <a-sphere></a-sphere>
+          </template>
+
+          <template id="data-template">
+            <a-entity user-count></a-entity>
+          </template>
+
+          <template id="maze-template">
+            <a-entity id="wrap" position="-25 2.2 0">
+            <a-entity id="end-cap118" mixin="end-cap" position="-20 0 -20"></a-entity><a-entity id="end-cap119" mixin="end-cap" position="-16 0 -20"></a-entity><a-entity id="wall-0" mixin="wall-one" position="-18 0 -20"></a-entity><a-entity id="end-cap1" mixin="end-cap" position="-12 0 -20"></a-entity><a-entity id="wall-1" mixin="wall-one" position="-14 0 -20"></a-entity><a-entity id="end-cap2" mixin="end-cap" position="-8 0 -20"></a-entity><a-entity id="wall-15" mixin="wall-one" position="-10 0 -20"></a-entity><a-entity id="end-cap3" mixin="end-cap" position="-4 0 -20"></a-entity><a-entity id="wall-2" mixin="wall-one" position="-6 0 -20"></a-entity><a-entity id="end-cap7" mixin="end-cap" position="0 0 -20"></a-entity><a-entity id="wall-3" mixin="wall-one" position="-2 0 -20"></a-entity><a-entity id="end-cap4" mixin="end-cap" position="4 0 -20"></a-entity><a-entity id="wall-4" mixin="wall-one" position="2 0 -20"></a-entity><a-entity id="end-cap5" mixin="end-cap" position="8 0 -20"></a-entity><a-entity id="wall-5" mixin="wall-one" position="6 0 -20"></a-entity><a-entity id="end-cap8" mixin="end-cap" position="12 0 -20"></a-entity><a-entity id="wall-6" mixin="wall-one" position="10 0 -20"></a-entity><a-entity id="end-cap6" mixin="end-cap" position="16 0 -20"></a-entity><a-entity id="wall-7" mixin="wall-one" position="14 0 -20"></a-entity><a-entity id="end-cap9" mixin="end-cap" position="20 0 -20"></a-entity><a-entity id="wall-8" mixin="wall-one" position="18 0 -20"></a-entity><a-entity id="end-cap10" mixin="end-cap" position="-20 0 -16"></a-entity><a-entity id="wall-9" mixin="wall-one" position="-20 0 -18" rotation="0 90 0"></a-entity><a-entity id="end-cap11" mixin="end-cap" position="-16 0 -16"></a-entity><a-entity id="wall-10" mixin="wall-one" position="-18 0 -16"></a-entity><a-entity id="end-cap12" mixin="end-cap" position="-12 0 -16"></a-entity><a-entity id="wall-11" mixin="wall-one" position="-14 0 -16"></a-entity><a-entity id="end-cap13" mixin="end-cap" position="-8 0 -16"></a-entity><a-entity id="wall-12" mixin="wall-one" position="-10 0 -16"></a-entity><a-entity id="end-cap14" mixin="end-cap" position="-4 0 -16"></a-entity><a-entity id="wall-13" mixin="wall-one" position="-6 0 -16"></a-entity><a-entity id="end-cap15" mixin="end-cap" position="0 0 -16"></a-entity><a-entity id="wall-14" mixin="wall-one" position="-2 0 -16"></a-entity><a-entity id="end-cap16" mixin="end-cap" position="4 0 -16"></a-entity><a-entity id="wall-16" mixin="wall-one" position="4 0 -18" rotation="0 90 0"></a-entity><a-entity id="end-cap17" mixin="end-cap" position="8 0 -16"></a-entity><a-entity id="end-cap18" mixin="end-cap" position="12 0 -16"></a-entity><a-entity id="wall-17" mixin="wall-one" position="10 0 -16"></a-entity><a-entity id="end-cap19" mixin="end-cap" position="16 0 -16"></a-entity><a-entity id="wall-18" mixin="wall-one" position="16 0 -18" rotation="0 90 0"></a-entity><a-entity id="end-cap20" mixin="end-cap" position="20 0 -16"></a-entity><a-entity id="wall-19" mixin="wall-one" position="20 0 -18" rotation="0 90 0"></a-entity><a-entity id="end-cap21" mixin="end-cap" position="-20 0 -12"></a-entity><a-entity id="wall-20" mixin="wall-one" position="-20 0 -14" rotation="0 90 0"></a-entity><a-entity id="end-cap22" mixin="end-cap" position="-16 0 -12"></a-entity><a-entity id="end-cap23" mixin="end-cap" position="-12 0 -12"></a-entity><a-entity id="wall-21" mixin="wall-one" position="-14 0 -12"></a-entity><a-entity id="end-cap24" mixin="end-cap" position="-8 0 -12"></a-entity><a-entity id="wall-22" mixin="wall-one" position="-10 0 -12"></a-entity><a-entity id="end-cap25" mixin="end-cap" position="-4 0 -12"></a-entity><a-entity id="wall-23" mixin="wall-one" position="-4 0 -14" rotation="0 90 0"></a-entity><a-entity id="end-cap26" mixin="end-cap" position="0 0 -12"></a-entity><a-entity id="wall-24" mixin="wall-one" position="0 0 -14" rotation="0 90 0"></a-entity><a-entity id="end-cap27" mixin="end-cap" position="4 0 -12"></a-entity><a-entity id="wall-25" mixin="wall-one" position="2 0 -12"></a-entity><a-entity id="end-cap28" mixin="end-cap" position="8 0 -12"></a-entity><a-entity id="wall-26" mixin="wall-one" position="6 0 -12"></a-entity><a-entity id="wall-27" mixin="wall-one" position="8 0 -14" rotation="0 90 0"></a-entity><a-entity id="end-cap29" mixin="end-cap" position="12 0 -12"></a-entity><a-entity id="wall-28" mixin="wall-one" position="12 0 -14" rotation="0 90 0"></a-entity><a-entity id="end-cap30" mixin="end-cap" position="16 0 -12"></a-entity><a-entity id="wall-29" mixin="wall-one" position="14 0 -12"></a-entity><a-entity id="end-cap31" mixin="end-cap" position="20 0 -12"></a-entity><a-entity id="wall-30" mixin="wall-one" position="20 0 -14" rotation="0 90 0"></a-entity><a-entity id="end-cap32" mixin="end-cap" position="-20 0 -8"></a-entity><a-entity id="wall-31" mixin="wall-one" position="-20 0 -10" rotation="0 90 0"></a-entity><a-entity id="end-cap33" mixin="end-cap" position="-16 0 -8"></a-entity><a-entity id="wall-32" mixin="wall-one" position="-18 0 -8"></a-entity><a-entity id="end-cap34" mixin="end-cap" position="-12 0 -8"></a-entity><a-entity id="wall-33" mixin="wall-one" position="-12 0 -10" rotation="0 90 0"></a-entity><a-entity id="end-cap36" mixin="end-cap" position="-8 0 -8"></a-entity><a-entity id="wall-34" mixin="wall-one" position="-8 0 -10" rotation="0 90 0"></a-entity><a-entity id="end-cap35" mixin="end-cap" position="-4 0 -8"></a-entity><a-entity id="end-cap37" mixin="end-cap" position="0 0 -8"></a-entity><a-entity id="wall-35" mixin="wall-one" position="-2 0 -8"></a-entity><a-entity id="end-cap40" mixin="end-cap" position="4 0 -8"></a-entity><a-entity id="wall-36" mixin="wall-one" position="2 0 -8"></a-entity><a-entity id="end-cap38" mixin="end-cap" position="8 0 -8"></a-entity><a-entity id="wall-37" mixin="wall-one" position="6 0 -8"></a-entity><a-entity id="end-cap39" mixin="end-cap" position="12 0 -8"></a-entity><a-entity id="wall-38" mixin="wall-one" position="10 0 -8"></a-entity><a-entity id="wall-39" mixin="wall-one" position="12 0 -10" rotation="0 90 0"></a-entity><a-entity id="end-cap41" mixin="end-cap" position="16 0 -8"></a-entity><a-entity id="end-cap42" mixin="end-cap" position="20 0 -8"></a-entity><a-entity id="wall-40" mixin="wall-one" position="18 0 -8"></a-entity><a-entity id="wall-41" mixin="wall-one" position="20 0 -10" rotation="0 90 0"></a-entity><a-entity id="end-cap43" mixin="end-cap" position="-20 0 -4"></a-entity><a-entity id="wall-42" mixin="wall-one" position="-20 0 -6" rotation="0 90 0"></a-entity><a-entity id="end-cap44" mixin="end-cap" position="-16 0 -4"></a-entity><a-entity id="end-cap45" mixin="end-cap" position="-12 0 -4"></a-entity><a-entity id="wall-43" mixin="wall-one" position="-14 0 -4"></a-entity><a-entity id="wall-45" mixin="wall-one" position="-12 0 -6" rotation="0 90 0"></a-entity><a-entity id="end-cap46" mixin="end-cap" position="-8 0 -4"></a-entity><a-entity id="wall-46" mixin="wall-one" position="-8 0 -6" rotation="0 90 0"></a-entity><a-entity id="end-cap47" mixin="end-cap" position="-4 0 -4"></a-entity><a-entity id="wall-47" mixin="wall-one" position="-4 0 -6" rotation="0 90 0"></a-entity><a-entity id="end-cap48" mixin="end-cap" position="0 0 -4"></a-entity><a-entity id="end-cap49" mixin="end-cap" position="4 0 -4"></a-entity><a-entity id="wall-48" mixin="wall-one" position="2 0 -4"></a-entity><a-entity id="end-cap50" mixin="end-cap" position="8 0 -4"></a-entity><a-entity id="wall-49" mixin="wall-one" position="6 0 -4"></a-entity><a-entity id="end-cap51" mixin="end-cap" position="12 0 -4"></a-entity><a-entity id="wall-50" mixin="wall-one" position="10 0 -4"></a-entity><a-entity id="end-cap52" mixin="end-cap" position="16 0 -4"></a-entity><a-entity id="wall-51" mixin="wall-one" position="14 0 -4"></a-entity><a-entity id="wall-52" mixin="wall-one" position="16 0 -6" rotation="0 90 0"></a-entity><a-entity id="end-cap55" mixin="end-cap" position="20 0 -4"></a-entity><a-entity id="wall-53" mixin="wall-one" position="20 0 -6" rotation="0 90 0"></a-entity><a-entity id="end-cap53" mixin="end-cap" position="-20 0 0"></a-entity><a-entity id="wall-54" mixin="wall-one" position="-20 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap54" mixin="end-cap" position="-16 0 0"></a-entity><a-entity id="wall-55" mixin="wall-one" position="-16 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap56" mixin="end-cap" position="-12 0 0"></a-entity><a-entity id="wall-56" mixin="wall-one" position="-12 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap57" mixin="end-cap" position="-8 0 0"></a-entity><a-entity id="end-cap58" mixin="end-cap" position="-4 0 0"></a-entity><a-entity id="wall-57" mixin="wall-one" position="-6 0 0"></a-entity><a-entity id="wall-58" mixin="wall-one" position="-4 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap59" template="#end-cap60"></a-entity><a-entity id="wall-59" mixin="wall-one" position="0 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap61" mixin="end-cap" position="4 0 0"></a-entity><a-entity id="wall-60" mixin="wall-one" position="4 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap63" mixin="end-cap" position="8 0 0"></a-entity><a-entity id="end-cap62" mixin="end-cap" position="12 0 0"></a-entity><a-entity id="wall-61" mixin="wall-one" position="10 0 0"></a-entity><a-entity id="end-cap64" mixin="end-cap" position="16 0 0"></a-entity><a-entity id="end-cap65" mixin="end-cap" position="20 0 0"></a-entity><a-entity id="wall-62" mixin="wall-one" position="20 0 -2" rotation="0 90 0"></a-entity><a-entity id="end-cap67" mixin="end-cap" position="-20 0 4"></a-entity><a-entity id="end-cap66" mixin="end-cap" position="-16 0 4"></a-entity><a-entity id="wall-63" mixin="wall-one" position="-16 0 2" rotation="0 90 0"></a-entity><a-entity id="end-cap68" mixin="end-cap" position="-12 0 4"></a-entity><a-entity id="wall-64" mixin="wall-one" position="-14 0 4"></a-entity><a-entity id="end-cap120" mixin="end-cap" position="-8 0 4"></a-entity><a-entity id="wall-65" mixin="wall-one" position="-10 0 4"></a-entity><a-entity id="end-cap69" mixin="end-cap" position="-4 0 4"></a-entity><a-entity id="wall-67" mixin="wall-one" position="-4 0 2" rotation="0 90 0"></a-entity><a-entity id="end-cap70" mixin="end-cap" position="0 0 4"></a-entity><a-entity id="wall-66" mixin="wall-one" position="0 0 2" rotation="0 90 0"></a-entity><a-entity id="end-cap71" mixin="end-cap" position="4 0 4"></a-entity><a-entity id="end-cap72" mixin="end-cap" position="8 0 4"></a-entity><a-entity id="wall-68" mixin="wall-one" position="6 0 4"></a-entity><a-entity id="wall-69" mixin="wall-one" position="8 0 2" rotation="0 90 0"></a-entity><a-entity id="end-cap74" mixin="end-cap" position="12 0 4"></a-entity><a-entity id="end-cap73" mixin="end-cap" position="16 0 4"></a-entity><a-entity id="wall-71" mixin="wall-one" position="14 0 4"></a-entity><a-entity id="wall-70" mixin="wall-one" position="16 0 2" rotation="0 90 0"></a-entity><a-entity id="end-cap75" mixin="end-cap" position="20 0 4"></a-entity><a-entity id="end-cap76" mixin="end-cap" position="-20 0 8"></a-entity><a-entity id="wall-72" mixin="wall-one" position="-20 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap77" mixin="end-cap" position="-16 0 8"></a-entity><a-entity id="end-cap130" mixin="end-cap" position="-12 0 8"></a-entity><a-entity id="wall-73" mixin="wall-one" position="-14 0 8"></a-entity><a-entity id="end-cap78" mixin="end-cap" position="-8 0 8"></a-entity><a-entity id="wall-74" mixin="wall-one" position="-8 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap79" mixin="end-cap" position="-4 0 8"></a-entity><a-entity id="wall-75" mixin="wall-one" position="-6 0 8"></a-entity><a-entity id="wall-76" mixin="wall-one" position="-4 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap80" mixin="end-cap" position="0 0 8"></a-entity><a-entity id="wall-77" mixin="wall-one" position="0 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap81" mixin="end-cap" position="4 0 8"></a-entity><a-entity id="wall-78" mixin="wall-one" position="2 0 8"></a-entity><a-entity id="end-cap82" mixin="end-cap" position="8 0 8"></a-entity><a-entity id="wall-79" mixin="wall-one" position="8 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap83" mixin="end-cap" position="12 0 8"></a-entity><a-entity id="wall-80" mixin="wall-one" position="12 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap84" mixin="end-cap" position="16 0 8"></a-entity><a-entity id="wall-81" mixin="wall-one" position="14 0 8"></a-entity><a-entity id="end-cap85" mixin="end-cap" position="20 0 8"></a-entity><a-entity id="wall-82" mixin="wall-one" position="18 0 8"></a-entity><a-entity id="wall-83" mixin="wall-one" position="20 0 6" rotation="0 90 0"></a-entity><a-entity id="end-cap86" mixin="end-cap" position="-20 0 12"></a-entity><a-entity id="wall-84" mixin="wall-one" position="-20 0 10" rotation="0 90 0"></a-entity><a-entity id="end-cap87" mixin="end-cap" position="-16 0 12"></a-entity><a-entity id="wall-85" mixin="wall-one" position="-18 0 12"></a-entity><a-entity id="end-cap88" mixin="end-cap" position="-12 0 12"></a-entity><a-entity id="wall-86" mixin="wall-one" position="-12 0 10" rotation="0 90 0"></a-entity><a-entity id="end-cap89" mixin="end-cap" position="-8 0 12"></a-entity><a-entity id="wall-87" mixin="wall-one" position="-10 0 12"></a-entity><a-entity id="end-cap90" mixin="end-cap" position="-4 0 12"></a-entity><a-entity id="wall-88" mixin="wall-one" position="-4 0 10" rotation="0 90 0"></a-entity><a-entity id="end-cap91" mixin="end-cap" position="0 0 12"></a-entity><a-entity id="wall-89" mixin="wall-one" position="-2 0 12"></a-entity><a-entity id="end-cap92" mixin="end-cap" position="4 0 12"></a-entity><a-entity id="wall-90" mixin="wall-one" position="4 0 10" rotation="0 90 0"></a-entity><a-entity id="end-cap93" mixin="end-cap" position="8 0 12"></a-entity><a-entity id="wall-91" mixin="wall-one" position="6 0 12"></a-entity><a-entity id="wall-92" mixin="wall-one" position="8 0 10" rotation="0 90 0"></a-entity><a-entity id="end-cap94" mixin="end-cap" position="12 0 12"></a-entity><a-entity id="wall-93" mixin="wall-one" position="10 0 12"></a-entity><a-entity id="end-cap131" mixin="end-cap" position="16 0 12"></a-entity><a-entity id="wall-94" mixin="wall-one" position="14 0 12"></a-entity><a-entity id="end-cap95" mixin="end-cap" position="20 0 12"></a-entity><a-entity id="wall-95" mixin="wall-one" position="20 0 10" rotation="0 90 0"></a-entity><a-entity id="end-cap96" mixin="end-cap" position="-20 0 16"></a-entity><a-entity id="wall-96" mixin="wall-one" position="-20 0 14" rotation="0 90 0"></a-entity><a-entity id="end-cap98" mixin="end-cap" position="-16 0 16"></a-entity><a-entity id="end-cap97" mixin="end-cap" position="-12 0 16"></a-entity><a-entity id="wall-97" mixin="wall-one" position="-14 0 16"></a-entity><a-entity id="wall-98" mixin="wall-one" position="-12 0 14" rotation="0 90 0"></a-entity><a-entity id="end-cap100" mixin="end-cap" position="-8 0 16"></a-entity><a-entity id="wall-99" mixin="wall-one" position="-8 0 14" rotation="0 90 0"></a-entity><a-entity id="end-cap99" mixin="end-cap" position="-4 0 16"></a-entity><a-entity id="wall-100" mixin="wall-one" position="-6 0 16"></a-entity><a-entity id="end-cap101" mixin="end-cap" position="0 0 16"></a-entity><a-entity id="wall-101" mixin="wall-one" position="0 0 14" rotation="0 90 0"></a-entity><a-entity id="end-cap102" mixin="end-cap" position="4 0 16"></a-entity><a-entity id="wall-102" mixin="wall-one" position="2 0 16"></a-entity><a-entity id="end-cap103" mixin="end-cap" position="8 0 16"></a-entity><a-entity id="wall-103" mixin="wall-one" position="6 0 16"></a-entity><a-entity id="end-cap104" mixin="end-cap" position="12 0 16"></a-entity><a-entity id="wall-104" mixin="wall-one" position="12 0 14" rotation="0 90 0"></a-entity><a-entity id="end-cap105" mixin="end-cap" position="16 0 16"></a-entity><a-entity id="end-cap106" mixin="end-cap" position="20 0 16"></a-entity><a-entity id="wall-105" mixin="wall-one" position="20 0 14" rotation="0 90 0"></a-entity><a-entity id="end-cap107" mixin="end-cap" position="-20 0 20"></a-entity><a-entity id="wall-106" mixin="wall-one" position="-20 0 18" rotation="0 90 0"></a-entity><a-entity id="end-cap108" mixin="end-cap" position="-16 0 20"></a-entity><a-entity id="wall-107" mixin="wall-one" position="-18 0 20"></a-entity><a-entity id="end-cap109" mixin="end-cap" position="-12 0 20"></a-entity><a-entity id="wall-108" mixin="wall-one" position="-14 0 20"></a-entity><a-entity id="end-cap110" mixin="end-cap" position="-8 0 20"></a-entity><a-entity id="wall-109" mixin="wall-one" position="-10 0 20"></a-entity><a-entity id="end-cap111" mixin="end-cap" position="-4 0 20"></a-entity><a-entity id="wall-110" mixin="wall-one" position="-6 0 20"></a-entity><a-entity id="wall-111" mixin="wall-one" position="-4 0 18" rotation="0 90 0"></a-entity><a-entity id="end-cap112" mixin="end-cap" position="0 0 20"></a-entity><a-entity id="wall-112" mixin="wall-one" position="-2 0 20"></a-entity><a-entity id="end-cap113" mixin="end-cap" position="4 0 20"></a-entity><a-entity id="wall-113" mixin="wall-one" position="2 0 20"></a-entity><a-entity id="end-cap114" mixin="end-cap" position="8 0 20"></a-entity><a-entity id="wall-114" mixin="wall-one" position="6 0 20"></a-entity><a-entity id="end-cap115" mixin="end-cap" position="12 0 20"></a-entity><a-entity id="wall-115" mixin="wall-one" position="10 0 20"></a-entity><a-entity id="end-cap116" mixin="end-cap" position="16 0 20"></a-entity><a-entity id="wall-116" mixin="wall-one" position="14 0 20"></a-entity><a-entity id="wall-117" mixin="wall-one" position="16 0 18" rotation="0 90 0"></a-entity><a-entity id="end-cap117" mixin="end-cap" position="20 0 20"></a-entity><a-entity id="wall-118" mixin="wall-one" position="18 0 20"></a-entity><a-entity id="wall-119" mixin="wall-one" position="20 0 18" rotation="0 90 0"></a-entity>
+            </a-entity>
+          </template>
+      </a-assets>
+
+      <a-entity id="player" player="playerType: GOD" mobile-control raycaster="near: 2" camera="userHeight:.5" universal-controls kinematic-body>
+        <a-entity daydream-controls="hand: right" raycaster line="color: #118A7E" daydream-walk></a-entity>
+      </a-entity>
+      
+
+      <a-entity id="data" user-count="0" networked="template:#data-template"></a-entity>
+
+      <a-entity id="ground"
+        geometry="primitive: plane; width: 300; height: 300;" static-body rotation="-90 25  0" position="0 -1 0"
+        material="src: #grid; repeat: 1000 1000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+
+      <a-entity
+        geometry="primitive: box; width: 300; height: 300; depth: 50" static-body rotation="-90 0 0" position="0 -25.5 0" material= "opacity: 0.0; transparent: true;"></a-entity>
+
+      <a-entity id="cheese-spot" networked="template:#cheese-template"></a-entity>
+
+      <a-entity
+        geometry="primitive: plane; width: 1000; height: 1000;" static-body rotation="-90 0 0" position="0 69 0" material= "opacity: 0.0; transparent: true;"></a-entity>
+
+      <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+
+      <a-entity id="maze" networked="template:#maze-template"></a-entity>
+
+
+      <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
+      <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
+      <a-entity light="color: white; intensity: 0.5" position="-5 5 15"></a-entity>
+      <a-entity light="color: white; type: ambient;"></a-entity>
+
+      
+    </a-scene>
+
+    <script>
+      
+      NAF.schemas.add({
+        template: '#mouse-template',
+        components: [
+          'position',
+          {
+            component: 'rotation',
+            property: 'y'
+          },
+        ]
+      });
+
+      NAF.schemas.add({
+        template: '#data-template',
+        components: [
+          'user-count'
+        ]
+      });
+
+
+      sceneEl = document.querySelector('a-scene');
+      userCount = Number(sceneEl.querySelector('#data').getAttribute("user-count"));
+
+    </script>
+  </body>
+</html>
